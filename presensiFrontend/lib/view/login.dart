@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           obscureText: !isPasswordShown,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
         FilledButton(
           onPressed: () {
             // TODO implement login action
