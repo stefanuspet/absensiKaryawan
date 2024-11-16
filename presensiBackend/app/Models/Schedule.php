@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $table = 'schedules';
+    protected $table = 'schedule';
 
     protected $fillable = [
-        'date', 'time', 'employee_id'
+        'date',
+        'start_time',
+        'end_time',
+        'user_id'
     ];
 
-    public function employee()
+    protected function user()
     {
-        return $this->belongsTo(Employee::class);
-    }
-
-    public function scopeEmployeeSchedule($query, $employee_id)
-    {
-        return $query->where('employee_id', $employee_id);
+        return $this->belongsTo(User::class);
     }
 }

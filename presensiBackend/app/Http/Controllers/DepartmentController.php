@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
     public function index()
     {
+        $departments = Department::all();
+        $employees = [];
+        foreach ($departments as $department) {
+            $employees[] = $department->employees;
+        }
         return response()->json([
             'message' => 'success',
-            'data' => Department::all()
+            'data' => $departments
         ], 200);
     }
 
@@ -63,5 +69,31 @@ class DepartmentController extends Controller
                 'message' => 'Department not found'
             ], 404);
         }
+    }
+
+    public function show($id)
+    {
+        $department = Department::with('employees')->find($id);
+
+        if ($department) {
+            return response()->json([
+                'message' => 'success',
+                'data' => $department
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Department not found'
+            ], 404);
+        }
+    }
+
+    public function getDepartmentByAuth()
+    {
+        $user = Auth::user();
+        $department = Department::where('user_id', $user->id)->get();
+        return response()->json([
+            'message' => 'success',
+            'data' => $department
+        ], 200);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\Schedule;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,168 +18,126 @@ class AttendanceController extends Controller
         ], 200);
     }
 
-    public function showAttendanceByEmployee($employee_id)
+    public function getAttendanceByAuth()
     {
-        $attendance = Attendance::where('employee_id', $employee_id)->get();
-
-        if ($attendance) {
-            return response()->json([
-                'message' => 'success',
-                'data' => $attendance
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Attendance not found'
-            ], 404);
-        }
+        $user = Auth::user();
+        $attendances = Attendance::where('user_id', $user->id)->get();
+        return response()->json([
+            'message' => 'success',
+            'data' => $attendances
+        ], 200);
     }
 
-    public function showAttendanceByDate($date)
+    public function getAttendanceByUser($id)
     {
-        $attendance = Attendance::where('date', $date)->get();
-
-        if ($attendance) {
-            return response()->json([
-                'message' => 'success',
-                'data' => $attendance
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Attendance not found'
-            ], 404);
-        }
+        $attendances = Attendance::where('user_id', $id)->get();
+        return response()->json([
+            'message' => 'success',
+            'data' => $attendances
+        ], 200);
     }
 
-    public function showAttendanceByEmployeeAndDate($employee_id, $date)
+    public function checkIn(Request $request)
     {
-        $attendance = Attendance::where('employee_id', $employee_id)->where('date', $date)->get();
+        $user = Auth::user();
+        $date = Carbon::today()->toDateString();
 
-        if ($attendance) {
-            return response()->json([
-                'message' => 'success',
-                'data' => $attendance
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Attendance not found'
-            ], 404);
-        }
-    }
-
-    public function storeArrivalAttendance(Request $request)
-    {
-
-        $request->validate([
-            'status' => 'required'
-        ]);
-
-        $authenticatedEmployee = Auth::user();
-
-        if ($request->employee_id != $authenticatedEmployee->id) {
-            return response()->json([
-                'message' => 'Unauthorized: You can only register attendance for yourself.',
-            ], 403);
-        }
-
-        $schedule = Schedule::where('employee_id', $request->employee_id)
-            ->whereDate('date', now()->toDateString())
+        $existingAttendance = Attendance::where('user_id', $user->id)
+            ->where('date', $date)
             ->first();
 
-        if (!$schedule) {
-            $schedule = Schedule::create([
-                'employee_id' => $request->employee_id,
-                'date' => now()->toDateString(),
-                'start_time' => now()->toTimeString(),
-                'end_time' => null,
-            ]);
+        if ($existingAttendance) {
+            return response()->json([
+                'message' => 'User already checked in today'
+            ], 400);
         }
 
-        $attendance = Attendance::create([
-            'employee_id' => $authenticatedEmployee->id,
-            'schedule_id' => $schedule->id,
-            'status' => $request->status,
-            'date' => now()->toDateString(),
-            'start_time' => now()->toTimeString(),
-            'end_time' => null,
-        ]);
+        $attendance = new Attendance();
+        $attendance->user_id = $user->id;
+        $attendance->date = $date;
+        $attendance->start_time = Carbon::now()->format('H:i:s');
+        $attendance->status = 'Masuk';
+        $attendance->save();
 
         return response()->json([
-            'message' => 'Attendance created successfully',
+            'message' => 'Check-in successful',
             'data' => $attendance
         ], 201);
     }
 
-
-    public function storeExitAttendance(Request $request)
+    public function checkOut(Request $request)
     {
+        $user = Auth::user();
+        $date = Carbon::today()->toDateString();
 
-        $request->validate([
-            'status' => 'required',
-        ]);
-
-        $authenticatedEmployee = Auth::user();
-
-        if ($request->employee_id != $authenticatedEmployee->id) {
-            return response()->json([
-                'message' => 'Unauthorized: You can only register exit attendance for yourself.',
-            ], 403);
-        }
-
-        $attendance = Attendance::where('employee_id', $request->employee_id)
-            ->whereDate('date', now()->toDateString())
-            ->whereNull('end_time')
+        $attendance = Attendance::where('user_id', $user->id)
+            ->where('date', $date)
             ->first();
+
         if (!$attendance) {
             return response()->json([
-                'message' => 'No active attendance found for today. Please mark your arrival first.',
+                'message' => 'User has not checked in today'
             ], 400);
         }
-
-        $attendance->update([
-            'end_time' => now()->toTimeString(),
-            'status' => $request->status,
-        ]);
+        if ($attendance->status == 'Izin') {
+            return response()->json([
+                'message' => 'User has requested leave today'
+            ], 400);
+        }
+        $attendance->end_time = Carbon::now()->format('H:i:s');
+        $attendance->save();
 
         return response()->json([
-            'message' => 'Attendance end time recorded successfully.',
+            'message' => 'Check-out successful',
             'data' => $attendance
         ], 200);
     }
 
-
-
-
-    public function update(Request $request, $id)
+    // Fungsi untuk mencatat izin
+    public function requestLeave(Request $request)
     {
-        $attendance = Attendance::find($id);
+        $user = Auth::user();
+        $date = Carbon::today()->toDateString(); // Mengambil tanggal hari ini
 
-        if ($attendance) {
-            $attendance->update($request->all());
+        $existingAttendance = Attendance::where('user_id', $user->id)
+            ->where('date', $date)
+            ->first();
+
+        if ($existingAttendance) {
             return response()->json([
-                'message' => 'Attendance updated',
-                'data' => $attendance
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Attendance not found'
-            ], 404);
+                'message' => 'You have already registered for attendance today'
+            ], 400);
         }
+
+        // Menyimpan data izin
+        $attendance = new Attendance();
+        $attendance->user_id = $user->id;
+        $attendance->date = $date;
+        $attendance->start_time = Carbon::now()->format('H:i:s');
+        $attendance->end_time = Carbon::now()->format('H:i:s');
+        $attendance->status = 'Izin';
+        $attendance->save();
+
+        return response()->json([
+            'message' => 'Leave request successful',
+            'data' => $attendance
+        ], 201);
     }
 
-
-    public function delete($id)
+    // update attendance
+    public function update(Request $request, $id)
     {
-        $attendance = Attendance::find($id);
+        $request->validate([
+            'status' => 'required|in:Masuk,Izin,Alpa'
+        ]);
 
-        if ($attendance) {
-            $attendance->delete();
-            return response()->json([
-                'message' => 'Attendance deleted'
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Attendance not found'
-            ], 404);
-        }
+        $attendance = Attendance::find($id);
+        $attendance->status = $request->status;
+        $attendance->save();
+
+        return response()->json([
+            'message' => 'Attendance updated',
+            'data' => $attendance
+        ], 200);
     }
 }

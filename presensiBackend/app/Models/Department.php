@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     protected $table = 'departments';
-    protected $fillable = ['name', 'location', 'manager_id'];
+    protected $fillable = ['name', 'location'];
 
-    public function manager()
+    public function employees()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->hasMany(User::class);
     }
 }

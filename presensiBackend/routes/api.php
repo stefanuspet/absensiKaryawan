@@ -3,53 +3,49 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ScheduleController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/myschedule', [ScheduleController::class, 'getScheduleByAuth']);
+
+    Route::get('/mydepartment', [DepartmentController::class, 'getDepartmentByAuth']);
+
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'getProfile']);
+    Route::put('/profile', [UserController::class, 'updateProfile']);
+
+    Route::post('/attendance-checkin', [AttendanceController::class, 'checkin']);
+    Route::post('/attendance-checkout', [AttendanceController::class, 'checkout']);
+    Route::post('/attendance-leave', [AttendanceController::class, 'requestLeave']);
+    Route::get('/myattendance', [AttendanceController::class, 'getAttendanceByAuth']);
+});
+
 
 
 Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+
+    Route::get('/userschedule/{id}', [ScheduleController::class, 'getScheduleByUser']);
+    Route::post('/schedules', [ScheduleController::class, 'store']);
+    Route::get('/schedules', [ScheduleController::class, 'index']);
+    Route::put('/schedules/{id}', [ScheduleController::class, 'update']);
+    Route::delete('/schedules/{id}', [ScheduleController::class, 'destroy']);
+
     Route::get('/department', [DepartmentController::class, 'index']);
     Route::post('/department', [DepartmentController::class, 'store']);
     Route::put('/department/{id}', [DepartmentController::class, 'update']);
     Route::delete('/department/{id}', [DepartmentController::class, 'delete']);
-});
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/employee', [EmployeeController::class, 'index']);
-    Route::post('/employee', [EmployeeController::class, 'storeEmployee']);
-    Route::post('/manager', [EmployeeController::class, 'storeManager']);
-    Route::get('/showEmployee', [EmployeeController::class, 'showEmployee']);
-    Route::get('/showManager', [EmployeeController::class, 'showManager']);
-    Route::get('/employee/{id}', [EmployeeController::class, 'showEmployeeByID']);
-    Route::put('/employee/{id}', [EmployeeController::class, 'updateEmployee']);
-    Route::delete('/employee/{id}', [EmployeeController::class, 'delete']);
-
-    // schedule
-    Route::get('/schedule', [ScheduleController::class, 'index']);
-    Route::get('/schedule/{employee_id}', [ScheduleController::class, 'showScheduleByEmployee']);
-    Route::get('/schedule/{date}', [ScheduleController::class, 'showScheduleByDate']);
-    Route::get('/schedule/{employee_id}/{date}', [ScheduleController::class, 'showScheduleByEmployeeAndDate']);
-    Route::post('/schedule', [ScheduleController::class, 'store']);
-    Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
-    Route::put('/schedule/{id}', [ScheduleController::class, 'delete']);
-    Route::get('/schedule/{id}', [ScheduleController::class, 'showScheduleByID']);
-
+    Route::get('/department/{id}', [DepartmentController::class, 'show']);
 
     // attendance
     Route::get('/attendance', [AttendanceController::class, 'index']);
-    Route::get('/attendance/{employee_id}', [AttendanceController::class, 'showAttendanceByEmployee']);
-    Route::get('/attendance/{date}', [AttendanceController::class, 'showAttendanceByDate']);
-    Route::get('/attendance/{employee_id}/{date}', [AttendanceController::class, 'showAttendanceByEmployeeAndDate']);
-    Route::post('/attendance', [AttendanceController::class, 'storeArrivalAttendance']);
-    Route::post('/attendance/exit', [AttendanceController::class, 'storeExitAttendance']);
+    Route::get('/attendance/{id}', [AttendanceController::class, 'getAttendanceByUser']);
     Route::put('/attendance/{id}', [AttendanceController::class, 'update']);
-    Route::put('/attendance/{id}', [AttendanceController::class, 'delete']);
 });
