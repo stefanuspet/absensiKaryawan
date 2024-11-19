@@ -27,3 +27,15 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'role': instance.role,
       'departmentId': instance.departmentId,
     };
+
+_$AuthModelImpl _$$AuthModelImplFromJson(Map<String, dynamic> json) =>
+    _$AuthModelImpl(
+      user: UserModel.fromJson(json['data'] as Map<String, dynamic>),
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$$AuthModelImplToJson(_$AuthModelImpl instance) =>
+    <String, dynamic>{
+      'data': instance.user,
+      'token': instance.token,
+    };

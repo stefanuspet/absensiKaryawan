@@ -1,9 +1,10 @@
 import 'package:absen_presen/view/dashboard_employee.dart';
 import 'package:absen_presen/view/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

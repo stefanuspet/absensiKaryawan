@@ -17,3 +17,13 @@ class UserModel with _$UserModel {
 
     factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 }
+
+@freezed
+class AuthModel with _$AuthModel {
+    const factory AuthModel({
+      @JsonKey(name: 'data') required UserModel user,
+      required String token,
+    }) = _AuthModel;
+
+    factory AuthModel.fromJson(Map<String, dynamic> json) => _$AuthModelFromJson(json);
+}
