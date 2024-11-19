@@ -4,7 +4,8 @@
 1. Pastikan ada Flutter SDK dan JDK 17 (untuk android).
 2. Pastikan instalasi Flutter aman, run command `flutter doctor` untuk mengecek.
 3. Jalankan command `flutter pub get` buat install dependency.
-4. Jalankan command `flutter run` untuk run aplikasi (debug mode), atau `flutter build apk` jika mau compile (release mode) ke android.
+4. Jalankan command `dart run build_runner watch` buat generate code.
+5. Jalankan command `flutter run` untuk run aplikasi (debug mode), atau `flutter build apk` jika mau compile (release mode) ke android.
 
 ## 🔀 Flow aplikasi
 Flow logic di aplikasi kurang lebih seperti ini:
