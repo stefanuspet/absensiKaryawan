@@ -21,6 +21,7 @@ ScheduleModel _$ScheduleModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ScheduleModel {
   int? get id => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_time')
   DateTime get startTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_time')
@@ -46,6 +47,7 @@ abstract class $ScheduleModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
+      DateTime date,
       @JsonKey(name: 'start_time') DateTime startTime,
       @JsonKey(name: 'end_time') DateTime endTime,
       @JsonKey(name: 'user_id') int userId});
@@ -67,6 +69,7 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? date = null,
     Object? startTime = null,
     Object? endTime = null,
     Object? userId = null,
@@ -76,6 +79,10 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       startTime: null == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -102,6 +109,7 @@ abstract class _$$ScheduleModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
+      DateTime date,
       @JsonKey(name: 'start_time') DateTime startTime,
       @JsonKey(name: 'end_time') DateTime endTime,
       @JsonKey(name: 'user_id') int userId});
@@ -121,6 +129,7 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? date = null,
     Object? startTime = null,
     Object? endTime = null,
     Object? userId = null,
@@ -130,6 +139,10 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       startTime: null == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -151,6 +164,7 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
 class _$ScheduleModelImpl implements _ScheduleModel {
   const _$ScheduleModelImpl(
       {this.id,
+      required this.date,
       @JsonKey(name: 'start_time') required this.startTime,
       @JsonKey(name: 'end_time') required this.endTime,
       @JsonKey(name: 'user_id') required this.userId});
@@ -160,6 +174,8 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
   @override
   final int? id;
+  @override
+  final DateTime date;
   @override
   @JsonKey(name: 'start_time')
   final DateTime startTime;
@@ -172,7 +188,7 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
   @override
   String toString() {
-    return 'ScheduleModel(id: $id, startTime: $startTime, endTime: $endTime, userId: $userId)';
+    return 'ScheduleModel(id: $id, date: $date, startTime: $startTime, endTime: $endTime, userId: $userId)';
   }
 
   @override
@@ -181,6 +197,7 @@ class _$ScheduleModelImpl implements _ScheduleModel {
         (other.runtimeType == runtimeType &&
             other is _$ScheduleModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -189,7 +206,8 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, startTime, endTime, userId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, date, startTime, endTime, userId);
 
   /// Create a copy of ScheduleModel
   /// with the given fields replaced by the non-null parameter values.
@@ -210,6 +228,7 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 abstract class _ScheduleModel implements ScheduleModel {
   const factory _ScheduleModel(
           {final int? id,
+          required final DateTime date,
           @JsonKey(name: 'start_time') required final DateTime startTime,
           @JsonKey(name: 'end_time') required final DateTime endTime,
           @JsonKey(name: 'user_id') required final int userId}) =
@@ -220,6 +239,8 @@ abstract class _ScheduleModel implements ScheduleModel {
 
   @override
   int? get id;
+  @override
+  DateTime get date;
   @override
   @JsonKey(name: 'start_time')
   DateTime get startTime;

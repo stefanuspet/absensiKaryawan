@@ -7,6 +7,7 @@ part 'schedule_model.g.dart';
 class ScheduleModel with _$ScheduleModel {
     const factory ScheduleModel({
         int? id,
+        required DateTime date,
         @JsonKey(name: 'start_time') required DateTime startTime,
         @JsonKey(name: 'end_time') required DateTime endTime,
         @JsonKey(name: 'user_id') required int userId,
