@@ -1,5 +1,6 @@
 import 'package:absen_presen/data/api/auth_api.dart';
-import 'package:flutter/material.dart';
+import 'package:absen_presen/data/api/department_api.dart';
+import 'package:absen_presen/data/model/departments/departments_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/model/user/user_model.dart';
@@ -18,7 +19,17 @@ class AuthLogic extends _$AuthLogic {
     try {
       final response = await login(username, password);
       final data = AuthModel.fromJson(response.data);
-      state = AsyncData(data);
+
+      // Fetch department data
+      final department = await getDepartment(data.token, id: data.user.departmentId);
+      final departmentData = DepartmentsModel.fromJson(department.data['data']);
+
+      state = AsyncData(
+        AuthModel(
+          user: data.user.copyWith(department: departmentData),
+          token: data.token,
+        ),
+      );
     } catch (e) {
       print(e);
       state = AsyncError(e.toString(), StackTrace.current);

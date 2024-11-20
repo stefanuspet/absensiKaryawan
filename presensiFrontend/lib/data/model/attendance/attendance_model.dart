@@ -7,6 +7,7 @@ part 'attendance_model.g.dart';
 class AttendanceModel with _$AttendanceModel {
     const factory AttendanceModel({
         int? id,
+        @JsonKey(name: 'user_id') required int userId,
         required DateTime date,
         @JsonKey(name: 'start_time') required DateTime startTime,
         @JsonKey(name: 'end_time') required DateTime endTime,

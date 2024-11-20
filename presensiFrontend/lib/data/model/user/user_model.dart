@@ -1,3 +1,4 @@
+import 'package:absen_presen/data/model/departments/departments_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_model.freezed.dart';
@@ -13,6 +14,7 @@ class UserModel with _$UserModel {
     required String phone,
     required String role,
     @JsonKey(name: 'department_id') required int departmentId,
+    DepartmentsModel? department,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

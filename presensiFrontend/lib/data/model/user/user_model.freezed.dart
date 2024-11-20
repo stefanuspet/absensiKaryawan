@@ -28,6 +28,7 @@ mixin _$UserModel {
   String get role => throw _privateConstructorUsedError;
   @JsonKey(name: 'department_id')
   int get departmentId => throw _privateConstructorUsedError;
+  DepartmentsModel? get department => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +52,10 @@ abstract class $UserModelCopyWith<$Res> {
       String email,
       String phone,
       String role,
-      @JsonKey(name: 'department_id') int departmentId});
+      @JsonKey(name: 'department_id') int departmentId,
+      DepartmentsModel? department});
+
+  $DepartmentsModelCopyWith<$Res>? get department;
 }
 
 /// @nodoc
@@ -76,6 +80,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? phone = null,
     Object? role = null,
     Object? departmentId = null,
+    Object? department = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -106,7 +111,25 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
               as int,
+      department: freezed == department
+          ? _value.department
+          : department // ignore: cast_nullable_to_non_nullable
+              as DepartmentsModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of UserModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DepartmentsModelCopyWith<$Res>? get department {
+    if (_value.department == null) {
+      return null;
+    }
+
+    return $DepartmentsModelCopyWith<$Res>(_value.department!, (value) {
+      return _then(_value.copyWith(department: value) as $Val);
+    });
   }
 }
 
@@ -125,7 +148,11 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String email,
       String phone,
       String role,
-      @JsonKey(name: 'department_id') int departmentId});
+      @JsonKey(name: 'department_id') int departmentId,
+      DepartmentsModel? department});
+
+  @override
+  $DepartmentsModelCopyWith<$Res>? get department;
 }
 
 /// @nodoc
@@ -148,6 +175,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? phone = null,
     Object? role = null,
     Object? departmentId = null,
+    Object? department = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -178,6 +206,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
               as int,
+      department: freezed == department
+          ? _value.department
+          : department // ignore: cast_nullable_to_non_nullable
+              as DepartmentsModel?,
     ));
   }
 }
@@ -192,7 +224,8 @@ class _$UserModelImpl implements _UserModel {
       required this.email,
       required this.phone,
       required this.role,
-      @JsonKey(name: 'department_id') required this.departmentId});
+      @JsonKey(name: 'department_id') required this.departmentId,
+      this.department});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -212,10 +245,12 @@ class _$UserModelImpl implements _UserModel {
   @override
   @JsonKey(name: 'department_id')
   final int departmentId;
+  @override
+  final DepartmentsModel? department;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, password: $password, name: $name, email: $email, phone: $phone, role: $role, departmentId: $departmentId)';
+    return 'UserModel(id: $id, password: $password, name: $name, email: $email, phone: $phone, role: $role, departmentId: $departmentId, department: $department)';
   }
 
   @override
@@ -231,13 +266,15 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.departmentId, departmentId) ||
-                other.departmentId == departmentId));
+                other.departmentId == departmentId) &&
+            (identical(other.department, department) ||
+                other.department == department));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, password, name, email, phone, role, departmentId);
+  int get hashCode => Object.hash(runtimeType, id, password, name, email, phone,
+      role, departmentId, department);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -257,14 +294,14 @@ class _$UserModelImpl implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-          {final int? id,
-          final String? password,
-          required final String name,
-          required final String email,
-          required final String phone,
-          required final String role,
-          @JsonKey(name: 'department_id') required final int departmentId}) =
-      _$UserModelImpl;
+      {final int? id,
+      final String? password,
+      required final String name,
+      required final String email,
+      required final String phone,
+      required final String role,
+      @JsonKey(name: 'department_id') required final int departmentId,
+      final DepartmentsModel? department}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -284,6 +321,8 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'department_id')
   int get departmentId;
+  @override
+  DepartmentsModel? get department;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

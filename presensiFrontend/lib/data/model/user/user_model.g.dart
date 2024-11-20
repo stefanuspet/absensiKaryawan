@@ -15,6 +15,10 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String,
       role: json['role'] as String,
       departmentId: (json['department_id'] as num).toInt(),
+      department: json['department'] == null
+          ? null
+          : DepartmentsModel.fromJson(
+              json['department'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -26,6 +30,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'phone': instance.phone,
       'role': instance.role,
       'department_id': instance.departmentId,
+      'department': instance.department,
     };
 
 _$AuthModelImpl _$$AuthModelImplFromJson(Map<String, dynamic> json) =>

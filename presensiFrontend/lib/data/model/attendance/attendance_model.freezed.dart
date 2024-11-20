@@ -21,6 +21,8 @@ AttendanceModel _$AttendanceModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AttendanceModel {
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int get userId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_time')
   DateTime get startTime => throw _privateConstructorUsedError;
@@ -46,6 +48,7 @@ abstract class $AttendanceModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
+      @JsonKey(name: 'user_id') int userId,
       DateTime date,
       @JsonKey(name: 'start_time') DateTime startTime,
       @JsonKey(name: 'end_time') DateTime endTime,
@@ -68,6 +71,7 @@ class _$AttendanceModelCopyWithImpl<$Res, $Val extends AttendanceModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? userId = null,
     Object? date = null,
     Object? startTime = null,
     Object? endTime = null,
@@ -78,6 +82,10 @@ class _$AttendanceModelCopyWithImpl<$Res, $Val extends AttendanceModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -108,6 +116,7 @@ abstract class _$$AttendanceModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
+      @JsonKey(name: 'user_id') int userId,
       DateTime date,
       @JsonKey(name: 'start_time') DateTime startTime,
       @JsonKey(name: 'end_time') DateTime endTime,
@@ -128,6 +137,7 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? userId = null,
     Object? date = null,
     Object? startTime = null,
     Object? endTime = null,
@@ -138,6 +148,10 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -163,6 +177,7 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
 class _$AttendanceModelImpl implements _AttendanceModel {
   const _$AttendanceModelImpl(
       {this.id,
+      @JsonKey(name: 'user_id') required this.userId,
       required this.date,
       @JsonKey(name: 'start_time') required this.startTime,
       @JsonKey(name: 'end_time') required this.endTime,
@@ -173,6 +188,9 @@ class _$AttendanceModelImpl implements _AttendanceModel {
 
   @override
   final int? id;
+  @override
+  @JsonKey(name: 'user_id')
+  final int userId;
   @override
   final DateTime date;
   @override
@@ -186,7 +204,7 @@ class _$AttendanceModelImpl implements _AttendanceModel {
 
   @override
   String toString() {
-    return 'AttendanceModel(id: $id, date: $date, startTime: $startTime, endTime: $endTime, status: $status)';
+    return 'AttendanceModel(id: $id, userId: $userId, date: $date, startTime: $startTime, endTime: $endTime, status: $status)';
   }
 
   @override
@@ -195,6 +213,7 @@ class _$AttendanceModelImpl implements _AttendanceModel {
         (other.runtimeType == runtimeType &&
             other is _$AttendanceModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
@@ -205,7 +224,7 @@ class _$AttendanceModelImpl implements _AttendanceModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, date, startTime, endTime, status);
+      Object.hash(runtimeType, id, userId, date, startTime, endTime, status);
 
   /// Create a copy of AttendanceModel
   /// with the given fields replaced by the non-null parameter values.
@@ -227,6 +246,7 @@ class _$AttendanceModelImpl implements _AttendanceModel {
 abstract class _AttendanceModel implements AttendanceModel {
   const factory _AttendanceModel(
       {final int? id,
+      @JsonKey(name: 'user_id') required final int userId,
       required final DateTime date,
       @JsonKey(name: 'start_time') required final DateTime startTime,
       @JsonKey(name: 'end_time') required final DateTime endTime,
@@ -237,6 +257,9 @@ abstract class _AttendanceModel implements AttendanceModel {
 
   @override
   int? get id;
+  @override
+  @JsonKey(name: 'user_id')
+  int get userId;
   @override
   DateTime get date;
   @override
