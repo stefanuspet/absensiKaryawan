@@ -35,7 +35,19 @@ class LoginForms extends HookConsumerWidget {
     ref.listen(
       authLogicProvider,
           (previous, next) {
-        if (next is! AsyncData) return;
+        // Cek apakah ada error dari backend (biasanya login salah)
+        if (next is AsyncError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Email/password salah!'),
+            ),
+          );
+        }
+
+        // Jangan lakukan navigasi jika user belum login
+        if (next is! AsyncData || next.value == null) return;
+
+        // Ketika sudah login, pindah ke halaman dashboard masing2 role
         if (next.value?.user.role == 'Administrator') {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AdminDashboard(),

@@ -14,7 +14,8 @@ class EmployeeDashboard extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // TODO implement logout action
+              ref.read(authLogicProvider.notifier).doLogout();
+              Navigator.pop(context);
             },
             icon: Icon(Icons.logout),
           )

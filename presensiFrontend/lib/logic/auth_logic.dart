@@ -21,7 +21,7 @@ class AuthLogic extends _$AuthLogic {
       state = AsyncData(data);
     } catch (e) {
       print(e);
-      rethrow;
+      state = AsyncError(e.toString(), StackTrace.current);
     }
   }
 
