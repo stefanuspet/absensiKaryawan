@@ -13,7 +13,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/myschedule', [ScheduleController::class, 'getScheduleByAuth']);
 
-    Route::get('/mydepartment', [DepartmentController::class, 'getDepartmentByAuth']);
+    Route::get('/department/{id}', [DepartmentController::class, 'show']);
+    // Route::get('/mydepartment', [DepartmentController::class, 'getDepartmentByAuth']);
 
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'getProfile']);
@@ -43,7 +44,6 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
     Route::post('/department', [DepartmentController::class, 'store']);
     Route::put('/department/{id}', [DepartmentController::class, 'update']);
     Route::delete('/department/{id}', [DepartmentController::class, 'delete']);
-    Route::get('/department/{id}', [DepartmentController::class, 'show']);
 
     // attendance
     Route::get('/attendance', [AttendanceController::class, 'index']);
