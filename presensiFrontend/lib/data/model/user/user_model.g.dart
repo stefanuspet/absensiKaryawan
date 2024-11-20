@@ -14,7 +14,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       phone: json['phone'] as String,
       role: json['role'] as String,
-      departmentId: (json['departmentId'] as num).toInt(),
+      departmentId: (json['department_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'email': instance.email,
       'phone': instance.phone,
       'role': instance.role,
-      'departmentId': instance.departmentId,
+      'department_id': instance.departmentId,
     };
 
 _$AuthModelImpl _$$AuthModelImplFromJson(Map<String, dynamic> json) =>

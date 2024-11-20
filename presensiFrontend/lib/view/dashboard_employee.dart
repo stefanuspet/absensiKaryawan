@@ -1,10 +1,13 @@
+import 'package:absen_presen/logic/auth_logic.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EmployeeDashboard extends StatelessWidget {
+class EmployeeDashboard extends ConsumerWidget {
   const EmployeeDashboard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final name = ref.watch(authLogicProvider).value?.user.name;
     return Scaffold(
       appBar: AppBar(
         title: Text('Presensi Karyawan'),
@@ -23,7 +26,7 @@ class EmployeeDashboard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Selamat datang, \$nama!',
+              'Selamat datang, $name!',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),

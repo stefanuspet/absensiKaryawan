@@ -11,11 +11,11 @@
 Flow logic di aplikasi kurang lebih seperti ini:
 
 ```
-    User melakukan sesuatu    ->   Event dikirim ke bloc (logic) 
+    User melakukan sesuatu    ->   Memanggil logic (apapun yang ada di folder logic)
                ^                            |
                |                            v
-    State dikirim ke widget,  <-   Bloc memproses event (misal
+    State dikirim ke widget,  <-   Logic memproses panggilan (misal
     Widget akan ter-refresh        memanggil API atau yang lain).
 
 ```
-Silahkan lihat di [dokumentasi BLoC](https://bloclibrary.dev/bloc-concepts/) untuk penjelasan lengkapnya.
+Silahkan lihat di [dokumentasi Riverpod](https://riverpod.dev/) untuk penjelasan lengkapnya.

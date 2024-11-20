@@ -26,6 +26,7 @@ mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
+  @JsonKey(name: 'department_id')
   int get departmentId => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
@@ -50,7 +51,7 @@ abstract class $UserModelCopyWith<$Res> {
       String email,
       String phone,
       String role,
-      int departmentId});
+      @JsonKey(name: 'department_id') int departmentId});
 }
 
 /// @nodoc
@@ -124,7 +125,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String email,
       String phone,
       String role,
-      int departmentId});
+      @JsonKey(name: 'department_id') int departmentId});
 }
 
 /// @nodoc
@@ -191,7 +192,7 @@ class _$UserModelImpl implements _UserModel {
       required this.email,
       required this.phone,
       required this.role,
-      required this.departmentId});
+      @JsonKey(name: 'department_id') required this.departmentId});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -209,6 +210,7 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String role;
   @override
+  @JsonKey(name: 'department_id')
   final int departmentId;
 
   @override
@@ -255,13 +257,14 @@ class _$UserModelImpl implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {final int? id,
-      final String? password,
-      required final String name,
-      required final String email,
-      required final String phone,
-      required final String role,
-      required final int departmentId}) = _$UserModelImpl;
+          {final int? id,
+          final String? password,
+          required final String name,
+          required final String email,
+          required final String phone,
+          required final String role,
+          @JsonKey(name: 'department_id') required final int departmentId}) =
+      _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -279,6 +282,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get role;
   @override
+  @JsonKey(name: 'department_id')
   int get departmentId;
 
   /// Create a copy of UserModel
