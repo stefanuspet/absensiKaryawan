@@ -1,8 +1,12 @@
+import 'package:absen_presen/logic/admin/users_list_logic.dart';
 import 'package:absen_presen/logic/auth_logic.dart';
+import 'package:absen_presen/view/admin_departemen.dart';
+import 'package:absen_presen/view/admin_pengguna.dart';
 import 'package:absen_presen/view/admin_presensi.dart';
 import 'package:absen_presen/view/admin_register.dart';
 import 'package:absen_presen/view/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AdminDashboard extends HookConsumerWidget {
@@ -38,6 +42,30 @@ class AdminDashboard extends HookConsumerWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AdminPengguna(),
+                  ),
+                );
+              },
+              child: Text('Lihat pengguna'),
+            ),
+            const SizedBox(height: 8),
+            FilledButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AdminDepartemen(),
+                  ),
+                );
+              },
+              child: Text('Lihat departemen'),
+            ),
+            const SizedBox(height: 8),
             FilledButton(
               onPressed: () {
                 Navigator.push(

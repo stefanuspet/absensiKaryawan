@@ -1,26 +1,26 @@
-import 'package:absen_presen/logic/admin/attendance_logic.dart';
+import 'package:absen_presen/logic/admin/users_list_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AdminPresensi extends ConsumerWidget {
-  const AdminPresensi({super.key});
+class AdminPengguna extends ConsumerWidget {
+  const AdminPengguna({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final attendanceData = ref.watch(attendanceLogicProvider);
+    final usersData = ref.watch(usersListLogicProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Presensi karyawan'),
+        title: Text('Pengguna'),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
-              ref.read(attendanceLogicProvider.notifier).fetchAttendanceModel();
+              ref.read(usersListLogicProvider.notifier).fetchAllUser();
             },
           ),
         ],
       ),
-      body: attendanceData.when(
+      body: usersData.when(
         data: (data) {
           return Card(
             child: InteractiveViewer(
@@ -32,14 +32,12 @@ class AdminPresensi extends ConsumerWidget {
                       (e) => DataRow(
                         cells: [
                           DataCell(Text((data.indexOf(e) + 1).toString())),
-                          DataCell(Text(e.user?.name ?? '')),
-                          DataCell(
-                            Text(
-                                '${e.date.day}/${e.date.month}/${e.date.year}'),
-                          ),
-                          DataCell(Text(e.startTime ?? 'Belum mulai')),
-                          DataCell(Text(e.endTime ?? 'Belum selesai')),
-                          DataCell(Text(e.status ?? '')),
+                          DataCell(Text(e.name)),
+                          DataCell(Text(e.email)),
+                          DataCell(Text(e.phone)),
+                          DataCell(Text(e.role)),
+                          DataCell(Text(e.department?.name ?? 'Department tidak diketahui')),
+                          DataCell(Text(e.department?.location ?? 'Department tidak diketahui')),
                         ],
                       ),
                     )
@@ -52,16 +50,19 @@ class AdminPresensi extends ConsumerWidget {
                     label: Text('Nama'),
                   ),
                   DataColumn(
-                    label: Text('Tanggal'),
+                    label: Text('Email'),
                   ),
                   DataColumn(
-                    label: Text('Jam Masuk'),
+                    label: Text('Phone'),
                   ),
                   DataColumn(
-                    label: Text('Jam Keluar'),
+                    label: Text('Role'),
                   ),
                   DataColumn(
-                    label: Text('Status'),
+                    label: Text('Department'),
+                  ),
+                  DataColumn(
+                    label: Text('Lokasi Department'),
                   ),
                 ],
               ),

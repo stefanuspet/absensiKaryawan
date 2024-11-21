@@ -7,7 +7,7 @@ import '../data/model/user/user_model.dart';
 
 part 'auth_logic.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AuthLogic extends _$AuthLogic {
   @override
   Future<AuthModel?> build() async {
