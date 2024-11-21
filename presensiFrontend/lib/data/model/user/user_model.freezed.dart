@@ -26,7 +26,9 @@ mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
+  @JsonKey(name: 'department_id')
   int get departmentId => throw _privateConstructorUsedError;
+  DepartmentsModel? get department => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +52,10 @@ abstract class $UserModelCopyWith<$Res> {
       String email,
       String phone,
       String role,
-      int departmentId});
+      @JsonKey(name: 'department_id') int departmentId,
+      DepartmentsModel? department});
+
+  $DepartmentsModelCopyWith<$Res>? get department;
 }
 
 /// @nodoc
@@ -75,6 +80,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? phone = null,
     Object? role = null,
     Object? departmentId = null,
+    Object? department = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -105,7 +111,25 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
               as int,
+      department: freezed == department
+          ? _value.department
+          : department // ignore: cast_nullable_to_non_nullable
+              as DepartmentsModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of UserModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DepartmentsModelCopyWith<$Res>? get department {
+    if (_value.department == null) {
+      return null;
+    }
+
+    return $DepartmentsModelCopyWith<$Res>(_value.department!, (value) {
+      return _then(_value.copyWith(department: value) as $Val);
+    });
   }
 }
 
@@ -124,7 +148,11 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String email,
       String phone,
       String role,
-      int departmentId});
+      @JsonKey(name: 'department_id') int departmentId,
+      DepartmentsModel? department});
+
+  @override
+  $DepartmentsModelCopyWith<$Res>? get department;
 }
 
 /// @nodoc
@@ -147,6 +175,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? phone = null,
     Object? role = null,
     Object? departmentId = null,
+    Object? department = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -177,6 +206,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
               as int,
+      department: freezed == department
+          ? _value.department
+          : department // ignore: cast_nullable_to_non_nullable
+              as DepartmentsModel?,
     ));
   }
 }
@@ -191,7 +224,8 @@ class _$UserModelImpl implements _UserModel {
       required this.email,
       required this.phone,
       required this.role,
-      required this.departmentId});
+      @JsonKey(name: 'department_id') required this.departmentId,
+      this.department});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -209,11 +243,14 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String role;
   @override
+  @JsonKey(name: 'department_id')
   final int departmentId;
+  @override
+  final DepartmentsModel? department;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, password: $password, name: $name, email: $email, phone: $phone, role: $role, departmentId: $departmentId)';
+    return 'UserModel(id: $id, password: $password, name: $name, email: $email, phone: $phone, role: $role, departmentId: $departmentId, department: $department)';
   }
 
   @override
@@ -229,13 +266,15 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.departmentId, departmentId) ||
-                other.departmentId == departmentId));
+                other.departmentId == departmentId) &&
+            (identical(other.department, department) ||
+                other.department == department));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, password, name, email, phone, role, departmentId);
+  int get hashCode => Object.hash(runtimeType, id, password, name, email, phone,
+      role, departmentId, department);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -261,7 +300,8 @@ abstract class _UserModel implements UserModel {
       required final String email,
       required final String phone,
       required final String role,
-      required final int departmentId}) = _$UserModelImpl;
+      @JsonKey(name: 'department_id') required final int departmentId,
+      final DepartmentsModel? department}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -279,12 +319,200 @@ abstract class _UserModel implements UserModel {
   @override
   String get role;
   @override
+  @JsonKey(name: 'department_id')
   int get departmentId;
+  @override
+  DepartmentsModel? get department;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AuthModel _$AuthModelFromJson(Map<String, dynamic> json) {
+  return _AuthModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AuthModel {
+  @JsonKey(name: 'data')
+  UserModel get user => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
+
+  /// Serializes this AuthModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AuthModelCopyWith<AuthModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AuthModelCopyWith<$Res> {
+  factory $AuthModelCopyWith(AuthModel value, $Res Function(AuthModel) then) =
+      _$AuthModelCopyWithImpl<$Res, AuthModel>;
+  @useResult
+  $Res call({@JsonKey(name: 'data') UserModel user, String token});
+
+  $UserModelCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class _$AuthModelCopyWithImpl<$Res, $Val extends AuthModel>
+    implements $AuthModelCopyWith<$Res> {
+  _$AuthModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+    Object? token = null,
+  }) {
+    return _then(_value.copyWith(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res> get user {
+    return $UserModelCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$AuthModelImplCopyWith<$Res>
+    implements $AuthModelCopyWith<$Res> {
+  factory _$$AuthModelImplCopyWith(
+          _$AuthModelImpl value, $Res Function(_$AuthModelImpl) then) =
+      __$$AuthModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'data') UserModel user, String token});
+
+  @override
+  $UserModelCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$AuthModelImplCopyWithImpl<$Res>
+    extends _$AuthModelCopyWithImpl<$Res, _$AuthModelImpl>
+    implements _$$AuthModelImplCopyWith<$Res> {
+  __$$AuthModelImplCopyWithImpl(
+      _$AuthModelImpl _value, $Res Function(_$AuthModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+    Object? token = null,
+  }) {
+    return _then(_$AuthModelImpl(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AuthModelImpl implements _AuthModel {
+  const _$AuthModelImpl(
+      {@JsonKey(name: 'data') required this.user, required this.token});
+
+  factory _$AuthModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AuthModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'data')
+  final UserModel user;
+  @override
+  final String token;
+
+  @override
+  String toString() {
+    return 'AuthModel(user: $user, token: $token)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AuthModelImpl &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.token, token) || other.token == token));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, user, token);
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthModelImplCopyWith<_$AuthModelImpl> get copyWith =>
+      __$$AuthModelImplCopyWithImpl<_$AuthModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AuthModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AuthModel implements AuthModel {
+  const factory _AuthModel(
+      {@JsonKey(name: 'data') required final UserModel user,
+      required final String token}) = _$AuthModelImpl;
+
+  factory _AuthModel.fromJson(Map<String, dynamic> json) =
+      _$AuthModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'data')
+  UserModel get user;
+  @override
+  String get token;
+
+  /// Create a copy of AuthModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AuthModelImplCopyWith<_$AuthModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

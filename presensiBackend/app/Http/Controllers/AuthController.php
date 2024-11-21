@@ -23,16 +23,16 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             if ($user->role == 'Administrator') {
-                $token = $user->createToken('admin-token', ["admin"])->plainTextToken;
+                $token = $user->createToken('admin-token', ['admin'])->plainTextToken;
                 return response()->json([
-                    'message' => 'success',
+                    'message' => 'success,admin',
                     'data' => $user,
                     'token' => $token
                 ], 200);
             } else {
                 $token = $user->createToken('user-token', ['user'])->plainTextToken;
                 return response()->json([
-                    'message' => 'success',
+                    'message' => 'success,employee',
                     'data' => $user,
                     'token' => $token
                 ], 200);
