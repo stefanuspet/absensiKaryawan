@@ -1,7 +1,9 @@
 import 'package:absen_presen/data/api/attendance_api.dart';
+import 'package:absen_presen/data/api/auth_api.dart';
 import 'package:absen_presen/logic/auth_logic.dart';
 import 'package:absen_presen/view/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EmployeeDashboard extends ConsumerWidget {
@@ -15,6 +17,17 @@ class EmployeeDashboard extends ConsumerWidget {
       appBar: AppBar(
         title: Text('Presensi Karyawan'),
         actions: [
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => EmployeeEdit(),
+          //       ),
+          //     );
+          //   },
+          //   icon: Icon(Icons.edit),
+          // ),
           IconButton(
             onPressed: () {
               ref.read(authLogicProvider.notifier).doLogout();
@@ -26,7 +39,7 @@ class EmployeeDashboard extends ConsumerWidget {
               );
             },
             icon: Icon(Icons.logout),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -40,7 +53,7 @@ class EmployeeDashboard extends ConsumerWidget {
               onPressed: () async {
                 try {
                   final response = await checkIn(token ?? '');
-                  if(response.statusCode == 201 &&context.mounted) {
+                  if (response.statusCode == 201 && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Presensi berhasil!'),
@@ -48,11 +61,11 @@ class EmployeeDashboard extends ConsumerWidget {
                     );
                   }
                 } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Anda sudah melakukan presensi!'),
-                      ),
-                    );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Anda sudah melakukan presensi!'),
+                    ),
+                  );
                 }
               },
               child: Text('Lakukan presensi'),
@@ -61,7 +74,7 @@ class EmployeeDashboard extends ConsumerWidget {
             FilledButton(
               onPressed: () async {
                 final response = await checkOut(token ?? '');
-                if(response.statusCode == 200 &&context.mounted) {
+                if (response.statusCode == 200 && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Checkout berhasil!'),
@@ -76,7 +89,7 @@ class EmployeeDashboard extends ConsumerWidget {
               onPressed: () async {
                 try {
                   final response = await leave(token ?? '');
-                  if(response.statusCode == 201 &&context.mounted) {
+                  if (response.statusCode == 201 && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Izin berhasil!'),
@@ -86,7 +99,8 @@ class EmployeeDashboard extends ConsumerWidget {
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Gagal meminta izin, anda sudah melakukan presensi!'),
+                      content: Text(
+                          'Gagal meminta izin, anda sudah melakukan presensi!'),
                     ),
                   );
                 }
@@ -139,6 +153,73 @@ class EmployeeInfo extends ConsumerWidget {
             textAlign: TextAlign.left,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class EmployeeEdit extends HookConsumerWidget {
+  const EmployeeEdit({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authData = ref.watch(authLogicProvider).value?.user;
+
+    final nameCtl = useTextEditingController(text: authData?.name);
+    final phoneCtl = useTextEditingController(text: authData?.phone);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Profil'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            TextField(
+              controller: nameCtl,
+              decoration: InputDecoration(
+                labelText: 'Nama',
+              ),
+            ),
+            TextField(
+              controller: phoneCtl,
+              decoration: InputDecoration(
+                labelText: 'Nomor Telepon',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FilledButton(
+                onPressed: () async {
+                  try {
+                    final response = await updateProfile(
+                      ref.read(authLogicProvider).value?.token ?? '',
+                      authData!.copyWith(
+                        name: nameCtl.text,
+                        phone: phoneCtl.text,
+                      ),
+                    );
+                    if (response.statusCode == 200 && context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Profil berhasil diubah!'),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Gagal mengubah profil'),
+                      ),
+                    );
+                  }
+                },
+                child: Text('Simpan'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

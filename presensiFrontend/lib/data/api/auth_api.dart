@@ -38,8 +38,8 @@ Future<Response<dynamic>> logout(String token) async {
 Future<Response<dynamic>> updateProfile(String token, UserModel newUserData) async {
   final data = newUserData.toJson();
   try {
-    final response = await dio.post(
-      'register',
+    final response = await dio.put(
+      'profile',
       data: data,
       options: Options(
         headers: {
