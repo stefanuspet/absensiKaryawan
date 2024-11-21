@@ -39,7 +39,14 @@ class EmployeeDashboard extends ConsumerWidget {
             FilledButton(
               onPressed: () async {
                 try {
-                  await checkIn(token ?? '');
+                  final response = await checkIn(token ?? '');
+                  if(response.statusCode == 201 &&context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Presensi berhasil!'),
+                      ),
+                    );
+                  }
                 } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -53,7 +60,14 @@ class EmployeeDashboard extends ConsumerWidget {
             const SizedBox(height: 8),
             FilledButton(
               onPressed: () async {
-                await checkOut(token ?? '');
+                final response = await checkOut(token ?? '');
+                if(response.statusCode == 200 &&context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Checkout berhasil!'),
+                    ),
+                  );
+                }
               },
               child: Text('Lakukan checkout'),
             ),
@@ -61,7 +75,14 @@ class EmployeeDashboard extends ConsumerWidget {
             FilledButton(
               onPressed: () async {
                 try {
-                  await leave(token ?? '');
+                  final response = await leave(token ?? '');
+                  if(response.statusCode == 201 &&context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Izin berhasil!'),
+                      ),
+                    );
+                  }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
