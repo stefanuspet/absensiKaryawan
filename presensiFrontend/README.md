@@ -7,6 +7,9 @@
 4. Jalankan command `dart run build_runner watch` buat generate code.
 5. Jalankan command `flutter run` untuk run aplikasi (debug mode), atau `flutter build apk` jika mau compile (release mode) ke android.
 
+## Konfigurasi server
+Konfigurasi server ada di `./lib/data/api/dio_config.dart`, silahkan sesuaikan dengan IP server (default localhost).
+
 ## 🔀 Flow aplikasi
 Flow logic di aplikasi kurang lebih seperti ini:
 
