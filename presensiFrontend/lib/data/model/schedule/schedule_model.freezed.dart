@@ -23,11 +23,12 @@ mixin _$ScheduleModel {
   int? get id => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_time')
-  DateTime get startTime => throw _privateConstructorUsedError;
+  String get startTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_time')
-  DateTime get endTime => throw _privateConstructorUsedError;
+  String get endTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
 
   /// Serializes this ScheduleModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,9 +49,12 @@ abstract class $ScheduleModelCopyWith<$Res> {
   $Res call(
       {int? id,
       DateTime date,
-      @JsonKey(name: 'start_time') DateTime startTime,
-      @JsonKey(name: 'end_time') DateTime endTime,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      @JsonKey(name: 'user_id') int userId,
+      UserModel? user});
+
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -73,6 +77,7 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
     Object? startTime = null,
     Object? endTime = null,
     Object? userId = null,
+    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -86,16 +91,34 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
       startTime: null == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       endTime: null == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of ScheduleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -110,9 +133,13 @@ abstract class _$$ScheduleModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       DateTime date,
-      @JsonKey(name: 'start_time') DateTime startTime,
-      @JsonKey(name: 'end_time') DateTime endTime,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      @JsonKey(name: 'user_id') int userId,
+      UserModel? user});
+
+  @override
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -133,6 +160,7 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
     Object? startTime = null,
     Object? endTime = null,
     Object? userId = null,
+    Object? user = freezed,
   }) {
     return _then(_$ScheduleModelImpl(
       id: freezed == id
@@ -146,15 +174,19 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
       startTime: null == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       endTime: null == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ));
   }
 }
@@ -167,7 +199,8 @@ class _$ScheduleModelImpl implements _ScheduleModel {
       required this.date,
       @JsonKey(name: 'start_time') required this.startTime,
       @JsonKey(name: 'end_time') required this.endTime,
-      @JsonKey(name: 'user_id') required this.userId});
+      @JsonKey(name: 'user_id') required this.userId,
+      this.user});
 
   factory _$ScheduleModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScheduleModelImplFromJson(json);
@@ -178,17 +211,19 @@ class _$ScheduleModelImpl implements _ScheduleModel {
   final DateTime date;
   @override
   @JsonKey(name: 'start_time')
-  final DateTime startTime;
+  final String startTime;
   @override
   @JsonKey(name: 'end_time')
-  final DateTime endTime;
+  final String endTime;
   @override
   @JsonKey(name: 'user_id')
   final int userId;
+  @override
+  final UserModel? user;
 
   @override
   String toString() {
-    return 'ScheduleModel(id: $id, date: $date, startTime: $startTime, endTime: $endTime, userId: $userId)';
+    return 'ScheduleModel(id: $id, date: $date, startTime: $startTime, endTime: $endTime, userId: $userId, user: $user)';
   }
 
   @override
@@ -201,13 +236,14 @@ class _$ScheduleModelImpl implements _ScheduleModel {
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, date, startTime, endTime, userId);
+      Object.hash(runtimeType, id, date, startTime, endTime, userId, user);
 
   /// Create a copy of ScheduleModel
   /// with the given fields replaced by the non-null parameter values.
@@ -227,12 +263,12 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
 abstract class _ScheduleModel implements ScheduleModel {
   const factory _ScheduleModel(
-          {final int? id,
-          required final DateTime date,
-          @JsonKey(name: 'start_time') required final DateTime startTime,
-          @JsonKey(name: 'end_time') required final DateTime endTime,
-          @JsonKey(name: 'user_id') required final int userId}) =
-      _$ScheduleModelImpl;
+      {final int? id,
+      required final DateTime date,
+      @JsonKey(name: 'start_time') required final String startTime,
+      @JsonKey(name: 'end_time') required final String endTime,
+      @JsonKey(name: 'user_id') required final int userId,
+      final UserModel? user}) = _$ScheduleModelImpl;
 
   factory _ScheduleModel.fromJson(Map<String, dynamic> json) =
       _$ScheduleModelImpl.fromJson;
@@ -243,13 +279,15 @@ abstract class _ScheduleModel implements ScheduleModel {
   DateTime get date;
   @override
   @JsonKey(name: 'start_time')
-  DateTime get startTime;
+  String get startTime;
   @override
   @JsonKey(name: 'end_time')
-  DateTime get endTime;
+  String get endTime;
   @override
   @JsonKey(name: 'user_id')
   int get userId;
+  @override
+  UserModel? get user;
 
   /// Create a copy of ScheduleModel
   /// with the given fields replaced by the non-null parameter values.
