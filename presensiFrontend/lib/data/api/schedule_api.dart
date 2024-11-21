@@ -20,13 +20,11 @@ Future<Response<dynamic>> getScheduleByUser(String token, {required int id}) asy
 }
 
 Future<Response<dynamic>> storeSchedule(String token, ScheduleModel newSchedule) async {
-  final data = newSchedule.toJson();
-  data['start_time'] = '${newSchedule.startTime.hour}:${newSchedule.startTime.minute}:00';
-  data['end_time'] = '${newSchedule.endTime.hour}:${newSchedule.endTime.minute}:00';
 
   try {
     final response = await dio.post(
       'schedules',
+      data: newSchedule.toJson(),
       options: Options(
         headers: {
           'Content-Type': 'application/json',
@@ -59,12 +57,11 @@ Future<Response<dynamic>> getAllSchedule(String token) async {
 
 Future<Response<dynamic>> updateSchedule(String token, ScheduleModel newSchedule) async {
   final data = newSchedule.toJson();
-  data['start_time'] = '${newSchedule.startTime.hour}:${newSchedule.startTime.minute}:00';
-  data['end_time'] = '${newSchedule.endTime.hour}:${newSchedule.endTime.minute}:00';
-
+  data.remove('user');
   try {
     final response = await dio.put(
       'schedules/${newSchedule.id}',
+      data: data,
       options: Options(
         headers: {
           'Content-Type': 'application/json',
