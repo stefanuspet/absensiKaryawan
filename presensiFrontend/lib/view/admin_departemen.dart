@@ -16,7 +16,7 @@ class AdminDepartemen extends ConsumerWidget {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
-              ref.read(usersListLogicProvider.notifier).fetchAllUser();
+              ref.read(departmentLogicProvider.notifier).fetchDepartment();
             },
           ),
         ],
