@@ -21,7 +21,7 @@ Future<Response<dynamic>> getDepartment(String token, {int? id}) async {
 
 Future<Response<dynamic>> addDepartment(String token, DepartmentsModel newDepartment) async {
   try {
-    final response = await dio.get(
+    final response = await dio.post(
       'department',
       data: newDepartment.toJson(),
       options: Options(
@@ -57,7 +57,7 @@ Future<Response<dynamic>> editDepartment(String token, DepartmentsModel newDepar
 
 Future<Response<dynamic>> deleteDepartment(String token, int departmentId) async {
   try {
-    final response = await dio.put(
+    final response = await dio.delete(
       'department/$departmentId',
       options: Options(
         headers: {

@@ -1,9 +1,9 @@
 import 'package:absen_presen/logic/admin/users_list_logic.dart';
 import 'package:absen_presen/logic/auth_logic.dart';
-import 'package:absen_presen/view/admin_departemen.dart';
-import 'package:absen_presen/view/admin_pengguna.dart';
-import 'package:absen_presen/view/admin_presensi.dart';
-import 'package:absen_presen/view/admin_register.dart';
+import 'package:absen_presen/view/admin/admin_departemen.dart';
+import 'package:absen_presen/view/admin/admin_pengguna.dart';
+import 'package:absen_presen/view/admin/admin_presensi.dart';
+import 'package:absen_presen/view/admin/admin_register.dart';
 import 'package:absen_presen/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
