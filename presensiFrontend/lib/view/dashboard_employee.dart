@@ -86,7 +86,7 @@ class EmployeeDashboard extends ConsumerWidget {
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Gagal meminta izin'),
+                      content: Text('Gagal meminta izin, anda sudah melakukan presensi!'),
                     ),
                   );
                 }
