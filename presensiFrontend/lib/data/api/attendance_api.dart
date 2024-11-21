@@ -103,8 +103,11 @@ Future<Response<dynamic>> adminGetAttendanceByUser(String token, int id) async {
 
 Future<Response<dynamic>> adminUpdateAttendance(String token, int id, String status) async {
   try {
-    final response = await dio.get(
+    final response = await dio.put(
       'attendance/$id',
+      data: {
+        'status': status,
+      },
       options: Options(
         headers: {
           'Content-Type': 'application/json',

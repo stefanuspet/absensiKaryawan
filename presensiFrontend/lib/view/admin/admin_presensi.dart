@@ -1,6 +1,14 @@
+import 'package:absen_presen/data/api/attendance_api.dart';
 import 'package:absen_presen/logic/admin/attendance_logic.dart';
+import 'package:absen_presen/logic/auth_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+enum AttendanceStatus {
+  Masuk,
+  Izin,
+  Alpa,
+}
 
 class AdminPresensi extends ConsumerWidget {
   const AdminPresensi({super.key});
@@ -39,7 +47,27 @@ class AdminPresensi extends ConsumerWidget {
                           ),
                           DataCell(Text(e.startTime ?? 'Belum mulai')),
                           DataCell(Text(e.endTime ?? 'Belum selesai')),
-                          DataCell(Text(e.status ?? '')),
+                          DataCell(
+                            DropdownButton<String>(
+                              value: e.status,
+                              items: AttendanceStatus.values.map(
+                                  (status) {
+                                    return DropdownMenuItem<String>(
+                                      value: status.name,
+                                      child: Text(status.name),
+                                    );
+                                  }
+                              ).toList(),
+                              onChanged: (value) async {
+                                await adminUpdateAttendance(
+                                  ref.read(authLogicProvider).value?.token ?? '',
+                                  e.id ?? 0,
+                                  value ?? '',
+                                );
+                                ref.read(attendanceLogicProvider.notifier).fetchAttendanceModel();
+                              },
+                            )
+                          ),
                         ],
                       ),
                     )
